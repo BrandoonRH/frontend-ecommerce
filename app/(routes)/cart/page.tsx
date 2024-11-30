@@ -5,13 +5,38 @@ import {Separator} from "@/components/ui/separator";
 import {formatPriceToMXN} from "@/lib/formatPrice";
 import {Button} from "@/components/ui/button";
 import CartItem from "@/app/(routes)/cart/components/cart-item";
+import {loadStripe} from "@stripe/stripe-js";
+import {makePaymentRequest} from "@/api/payment";
 
+const stripePromise = loadStripe('pk_test_51QPPZrHq7YgOhS8ZUPEwKsVa1abNp6T95nuP08zoNIavegHeHp8cogGgtVliWpczXue7aC4yZOXC6m5RmK72uD8000TpgbHm06')
 
 export default function Page() {
-    const {items} = useCart();
+    const {items, removeAllItems} = useCart();
 
     const prices = items.map((item: Product) => item.price);
     const totalPrices = items.reduce((acc, item) => acc + item.price, 0);
+
+    const buyStripe = async () => {
+        try {
+
+            const stripe = await stripePromise
+
+            //Error Aquí
+            const res = await makePaymentRequest.post("/api/orders", {
+                products: items
+            });
+            //console.log(res);
+            removeAllItems();
+            await stripe?.redirectToCheckout({
+                sessionId: res.data.stripeSession.id
+            })
+
+
+        }catch (error){
+            console.error("Error en la compra:", error);
+        }
+    };
+
 
 
     return (
@@ -37,7 +62,7 @@ export default function Page() {
                             <p>{formatPriceToMXN(totalPrices)}</p>
                         </div>
                         <div className="flex items-center justify-center w-full mt-3">
-                            <Button className="w-full uppercase" onClick={() => console.log("comprando")}>Comprar</Button>
+                            <Button className="w-full uppercase" onClick={buyStripe}>Comprar</Button>
                         </div>
                     </div>
                 </div>

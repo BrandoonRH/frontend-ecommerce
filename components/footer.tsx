@@ -32,9 +32,9 @@ export const Footer = () => {
                 <div className="sm:flex sm:items-center sm:justify-between">
                     <p className="">
                         <span className="font-bold">
-                            SaraCastro
+                            EcoHair
                         </span>
-                        E-commerce
+                        {" "} Productos Capilares
                     </p>
 
                     <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-300">
@@ -50,7 +50,7 @@ export const Footer = () => {
                 <Separator className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
                 <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-300">
                     &copy; 2024
-                    <Link href="#"> SaraCastro </Link>
+                    <Link href="#"> EcoHair </Link>
                     Todos los derechos reservados
                 </span>
             </div>

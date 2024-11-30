@@ -6,19 +6,22 @@ import MenuList from "@/components/menu-list";
 import ItemsMenuMobile from "@/components/items-menu-mobile";
 import {ToggleTheme} from "@/components/toggle-theme";
 import {useCart} from "@/hooks/use-cart";
+import {useLovedProducts} from "@/hooks/use-loved-products";
+import Image from "next/image";
+import Link from "next/link";
 
 
 function Navbar() {
     const router = useRouter();
     const cart = useCart();
+    const {lovedItems} = useLovedProducts()
 
 
     return (
        <div className="flex items-center justify-between p-4 mx-auto cursor-pointer sm:max-w-4xl md:max-w-6xl">
-            <h1 className="text-3xl" onClick={() => router.push("/")}>
-                Ecommerc
-                <span className="font-bold">Sara</span>
-            </h1>
+           <Link href="/">
+               <Image src="/success.webp" alt="success" width={100} height={50}  className="rounded-lg" />
+           </Link>
            <div className="items-center justify-between hidden sm:flex">
                 <MenuList/>
            </div>
@@ -35,7 +38,7 @@ function Navbar() {
                   </div>
                )}
 
-                <Heart strokeWidth="1" className="cursor-pointer" onClick={() => router.push("/love-products")} />
+                <Heart strokeWidth="1" className={`cursor-pointer ${lovedItems.length > 0 && 'fill-black dark:fill-white' }`} onClick={() => router.push("/love-products")} />
                 <User strokeWidth="1" className="cursor-pointer"/>
                 <ToggleTheme/>
            </div>

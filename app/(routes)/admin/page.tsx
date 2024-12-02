@@ -14,6 +14,7 @@ import {
     Legend,
     ArcElement,
 } from 'chart.js';
+import {useAdminAuth} from "@/hooks/useAdminAuth";
 
 // Registrar componentes de Chart.js
 ChartJS.register(
@@ -29,6 +30,8 @@ ChartJS.register(
 );
 
 export default function Page() {
+    useAdminAuth();
+    
     // Datos para la gráfica de barras
     const barData = {
         labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
